@@ -4,3 +4,6 @@ applications:
 - name: phppgadmin-cfready
   memory: 1G
   instances: 1
+  buildpack: https://github.com/cloudfoundry/php-buildpack.git#v4.3.27
+  services:
+    - [[my cloud foundry postgres instance]]

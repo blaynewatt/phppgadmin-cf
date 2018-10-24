@@ -6,15 +6,23 @@ It can be use with service provided by [Dingo PostgreSQL](https://github.com/din
 It use [cf-helper-php](https://github.com/cloudfoundry-community/cf-helper-php) to auto-binding postgresql service on phpPgAdmin.
 
 ## Installation & usage
+Updated Steps:
+ 1. clone the repo locally
+ 2. modify manifest.yml and replace:
+      - name: phppgadmin-cfready with your preferred name for the app [optional]
+      - [[my cloud foundry postgres instance]] with your instance name for postgres in your org/space
+ 3. publish to cloud foundry with 'cf push'
+ 4. connect to phpPgAdmin through its HTTP route
 
-Just 5 steps:
+
+--- old steps --- Just 5 steps:
 
  1. Download the zip file from here: [https://github.com/cloudfoundry-community/phppgadmin-cf/archive/cf-ready.zip](https://github.com/cloudfoundry-community/phppgadmin-cf/archive/cf-ready.zip).
  2. Unzip it
  3. Go inside the unzipped folder and run `cf push --no-start -n phppgadmin-SPACENAME`
  4. If needed create a user-provided service to connect to an existing remote pg instance (e.g. ``cf cups ccdb-pg -p '{"uri":"postgres://192.168.131.8:5524/ccdb"}'`` )
  5. Bind your postgresql service with `cf bs phppgadmin-cfready <service_name>` and repeat for all postgresql services you want in your phpPgAdmin
- 6. Restage the service with `cf restage phppgadmin-cfready` 
+ 6. Restage the service with `cf restage phppgadmin-cfready`
  7. Connect to phpPgAdmin through its HTTP route, and select the db instance to connect to from the list, and specify associated login/password of the pgdb to access
 
 ## Combo
@@ -44,7 +52,7 @@ cf curl /v2/apps\?q=name:${appname} | jq -r ".resources[0].entity.service_bindin
 
 ## FAQ
 
-I'm getting the following error message, although the submitted credentials are correct: 
+I'm getting the following error message, although the submitted credentials are correct:
 > Attempt to connect with invalid server parameter, possibly someone is trying to hack your system
 
 Try closing your HTTP session (clear your cookies or use a private browsing window) to flush your PHP session. It might be your previous attempts to log in are interferring.
